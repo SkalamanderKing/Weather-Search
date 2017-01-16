@@ -45,7 +45,7 @@
 				  <div class="card-block">
 				    <h4 class="card-title">Special title treatment</h4>
 				    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-				    <a href="#" class="btn btn-primary">Sök väder!</a>
+				    <a href="#" id="weatherBtn" class="btn btn-primary">Sök väder!</a>
 				  </div>
 				</div>				
 			</div>
@@ -53,11 +53,12 @@
 			<!--UV-->
 			<div class="col-lg-3">
 				<div class="card">
-				  <h3 class="card-header">Vädret just nu</h3>
+				  <h3 class="card-header">UV Index</h3>
 				  <div class="card-block">
 				    <h4 class="card-title">Special title treatment</h4>
 				    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-				    <a href="#" class="btn btn-primary">Sök väder!</a>
+				    <input id="uvSearchBox" value="london">
+				    <a href="#" id="uvBtn" class="btn btn-primary">Sök UV Index!</a>
 				  </div>
 				</div>
 			</div>
@@ -65,11 +66,11 @@
 			<!--5 dagars-->
 			<div class="col-lg-3">
 				<div class="card">
-				  <h3 class="card-header">5 dagars väder</h3>
+				  <h3 class="card-header">Prognos</h3>
 				  <div class="card-block">
 				    <h4 class="card-title">Special title treatment</h4>
 				    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-				    <a href="#" class="btn btn-primary">Sök väder!</a>
+				    <a href="#" id="forecastBtn" class="btn btn-primary">Sök 5 dagars prognos!</a>
 				  </div>
 				</div>
 			</div>
@@ -77,11 +78,11 @@
 			<!--Air Pollution-->
 			<div class="col-lg-3">
 				<div class="card">
-				  <h3 class="card-header">Air Pollution</h3>
+				  <h3 class="card-header">Luftkvalité</h3>
 				  <div class="card-block">
 				    <h4 class="card-title">Special title treatment</h4>
 				    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-				    <a href="#" class="btn btn-primary">Sök väder!</a>
+				    <a href="#" id="pollutionBtn" class="btn btn-primary">Sök luftkvalité!</a>
 				  </div>
 				</div>
 			</div>
@@ -90,7 +91,7 @@
 	</div>
 	<!--/Alternativ-->	
 
-	<div class="container">
+	<div id="weatherSearch" class="container">
 		<div class="row">
 			<div class="col-lg-6">
 				<div id="map"></div>

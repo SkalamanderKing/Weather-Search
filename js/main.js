@@ -14,9 +14,21 @@ var longitude;
       draggable:true,
     });
   }
+  //function för att sätta longitude och latitude
+  function retLatLng (latitude, longitude) {
+  	latitude = latitude;
+  	longitude = longitude
+  }
+
 
 $(document).ready(function(){
+	$("#weatherSearch").hide();
 	$(".card").fadeIn("slow");
+	
+	
+	$("#weatherBtn").click(function(){
+		$("#weatherSearch").toggle("slow");
+	});
 	/*
 	Knappen trycks och JSON hämtas
 	*/
@@ -29,17 +41,11 @@ $(document).ready(function(){
 		var unit = "&units=metric";
 		var url = currentWeatherApi + search + apiKey + unit;
 
-		// Uppbyggnad av "Current UV" api
-		var uvApi = "http://api.openweathermap.org/v3/uvi/"
-		var timeStamp = "/current.json";
-		var uvUrl = "http://api.openweathermap.org/v3/uvi/52,-0/current.json?appid=ac2a79b6cd5460524fd1766d1c265114"
-
 		$.getJSON(url , function(data){
 			//Hämtar JSON data ang. lat & lng för map
 			latitude = data.coord.lat;
-			console.log(latitude);
 			longitude = data.coord.lon;
-			console.log(longitude);
+			retLatLng(latitude,longitude);
 
 			//hämtar JSON data för aktuellt väder 
 			var temp = data.main.temp;
@@ -75,19 +81,52 @@ $(document).ready(function(){
       initMap(latitude,longitude);
 		});
 
-		$.getJSON(uvUrl , function(data){
-			var uv = data.data;
-
-			if(uv >= 0.0 && uv <= 2.9){
-				uvIndex = "Green";
-			}
-			$("ul").append("<li>"+ uv + " " + uvIndex +"</li>");			
-		});
-
 	});
 	/*
 	Knappen trycks och JSON hämtas
 	*/
+
+	/**********************************
+	UV knapp sökningen
+	**********************************/
+	$("#uvBtn").click(function(){
+		$("#weatherSearch").fadeOut("slow");
+		// Uppbyggnad av "Current UV" api
+		
+		var geocodeApi = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+		var search = $("#uvSearchBox").val();
+		var geocodeApiKey = "&key=AIzaSyAuFutnl3HZQLaCVm4KwxBMd8xfPIfVwHg";
+		var geocodeUrl = geocodeApi+search+geocodeApiKey;
+
+
+		$.getJSON(geocodeUrl , function(data){
+			latitude = data.results[0].geometry.location.lat;
+			longitude = data.results[0].geometry.location.lng;
+
+			var uvApi = "http://api.openweathermap.org/v3/uvi/"
+			var latLng = latitude.toFixed()+","+longitude.toFixed();
+
+			var timeStamp = "/current.json";
+			var uvApiKey = "?appid=ac2a79b6cd5460524fd1766d1c265114"
+			var uvUrl = uvApi + latLng + timeStamp + uvApiKey;			
+
+			$.getJSON(uvUrl , function(data){
+				console.log(uvUrl);
+
+				var uv = data.data;
+				console.log(uv);
+
+				if(uv >= 0.0 && uv <= 2.9){
+					uvIndex = "Green";
+				}
+				$("ul").append("<li>"+ uv + " lames" + uvIndex +"</li>");			
+			});
+		});
+	/**********************************
+	/UV knapp sökningen
+	**********************************/
+
+	});
 });
 
 
