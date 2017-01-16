@@ -16,6 +16,7 @@ var longitude;
   }
 
 $(document).ready(function(){
+	$(".card").fadeIn("slow");
 	/*
 	Knappen trycks och JSON hämtas
 	*/
@@ -34,7 +35,6 @@ $(document).ready(function(){
 		var uvUrl = "http://api.openweathermap.org/v3/uvi/52,-0/current.json?appid=ac2a79b6cd5460524fd1766d1c265114"
 
 		$.getJSON(url , function(data){
-			
 			//Hämtar JSON data ang. lat & lng för map
 			latitude = data.coord.lat;
 			console.log(latitude);
