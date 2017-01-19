@@ -28,6 +28,10 @@ $(document).ready(function(){
 	
 	$("#weatherBtn").click(function(){
 		$("#weatherSearch").toggle("slow");
+		$("#weatherCard").hide();
+		$("#uvCard").hide();
+		$("#forecastCard").hide();
+		$("#ozoneCard").hide();
 	});
 	/*
 	Knappen trycks och JSON hämtas

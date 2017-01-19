@@ -39,7 +39,7 @@
 	<div class="container">
 		<div class="row">
 			<!--Väder-->
-			<div class="col-lg-3">
+			<div id="weatherCard" class="col-lg-3">
 				<div class="card">
 				  <h3 class="card-header">Vädret just nu</h3>
 				  <div class="card-block">
@@ -51,7 +51,7 @@
 			</div>
 			<!--/Väder-->
 			<!--UV-->
-			<div class="col-lg-3">
+			<div id="uvCard" class="col-lg-3">
 				<div class="card">
 				  <h3 class="card-header">UV Index</h3>
 				  <div class="card-block">
@@ -64,7 +64,7 @@
 			</div>
 			<!--/UV-->
 			<!--5 dagars-->
-			<div class="col-lg-3">
+			<div id="forecastCard" class="col-lg-3">
 				<div class="card">
 				  <h3 class="card-header">Prognos</h3>
 				  <div class="card-block">
@@ -76,13 +76,13 @@
 			</div>
 			<!--/5 dagars-->
 			<!--Air Pollution-->
-			<div class="col-lg-3">
+			<div id="ozoneCard" class="col-lg-3">
 				<div class="card">
-				  <h3 class="card-header">Luftkvalité</h3>
+				  <h3 class="card-header">Ozone</h3>
 				  <div class="card-block">
 				    <h4 class="card-title">Special title treatment</h4>
 				    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-				    <a href="#" id="pollutionBtn" class="btn btn-primary">Sök luftkvalité!</a>
+				    <a href="#" id="ozoneBtn" class="btn btn-primary">Sök luftkvalité!</a>
 				  </div>
 				</div>
 			</div>
@@ -91,13 +91,25 @@
 	</div>
 	<!--/Alternativ-->	
 
+
+
 	<div id="weatherSearch" class="container">
+
 		<div class="row">
-			<div class="col-lg-6">
+  		<div class="col-md-6 offset-md-3">
+
+  			<h2>Sök vädret var som helst i världen!</h2>
+  			<p></p>
+		    <div class="input-group my-3">
+		      <input id="searchBox" class="form-control" value="London">
+		      <span class="input-group-btn">
+		        <button id="btn" class="btn btn-secondary" type="button">Sök väder!</button>
+		      </span>
+		    </div>				
+				
 				<div id="map"></div>
-				<button id="btn" class="mt-3 btn btn-lg btn-primary">tryck här!</button>
-				<input id="searchBox" value="london">
 			</div>
+
 			<div class="col-lg-6">
 				<ul>
 				</ul>
