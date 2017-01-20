@@ -3,15 +3,19 @@ var longitude;
 	//initiering av google maps
   function initMap(latitude, longitude) {
 
-    var uluru = {lat: latitude, lng: longitude};
+    var markerPos = {lat: latitude, lng: longitude};
     var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 4,
-      center: uluru
+      center: markerPos,
+      draggable: false,
+      zoomControl:false,
+      streetViewControl:false,
+      scrollwheel:false
     });
     var marker = new google.maps.Marker({
-      position: uluru,
+      position: markerPos,
       map: map,
-      draggable:true,
+
     });
   }
   //function för att sätta longitude och latitude
@@ -23,8 +27,17 @@ var longitude;
 
 $(document).ready(function(){
 	$("#weatherSearch").hide();
+	$(".backToMenuBtn").hide();
 	$(".card").fadeIn("slow");
 	
+	//backToMenuBtn 
+	$(".backToMenuBtn").click(function(){
+		$("#weatherSearch").fadeOut("fast");
+		$("#weatherCard").fadeIn("slow");
+		$("#uvCard").fadeIn("slow");
+		$("#forecastCard").fadeIn("slow");
+		$("#ozoneCard").fadeIn("slow");		
+	});	
 	
 	$("#weatherBtn").click(function(){
 		$("#weatherSearch").toggle("slow");
@@ -37,7 +50,7 @@ $(document).ready(function(){
 	Knappen trycks och JSON hämtas
 	*/
 	$("#btn").click(function(){
-		
+		$(".backToMenuBtn").show();
 		// Uppbyggnad av "Current Weather" api
 		var currentWeatherApi = "http://api.openweathermap.org/data/2.5/weather?q=";
 		var search = $("#searchBox").val();
@@ -60,28 +73,27 @@ $(document).ready(function(){
 			var uvIndex;
 
 			if(id>=200 && id<300){
-				condition = "Thunderstorm"; 
+				condition = "åskstorm"; 
 			}
 			else if (id>=300 && id<500){
-				condition ="Drizzle";
+				condition ="duggregn";
 			} 
 			else if (id>=500 && id<600){
-				condition = "Rain";
+				condition = "regn";
 			} 
 			else if (id>=600 && id<700){
-				condition ="Snow";
+				condition ="snö";
 			} 
 
 			else if (id == 800){
-				condition ="Snow";
+				condition ="snö";
 			}
 			else if (id == 741){
 				condition ="Fog";
 			}
 
-			console.log(id);
-			console.log(temp);
-			$("ul").append("<li>"+temp+ " "+condition+"</li>");
+			$("ul").html("<li>"+temp+"°C"+" och "+condition+"</li>");
+			$("#headerCity").html("I "+search+" är vädret just nu"+":");
       initMap(latitude,longitude);
 		});
 
