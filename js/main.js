@@ -12,12 +12,33 @@ var longitude;
       streetViewControl:false,
       scrollwheel:false
     });
+    
     var marker = new google.maps.Marker({
       position: markerPos,
       map: map,
 
     });
   }
+
+  function initUvMap(latitude, longitude) {
+
+    var markerPos = {lat: latitude, lng: longitude};
+    var map = new google.maps.Map(document.getElementById('uvMap'), {
+      zoom: 4,
+      center: markerPos,
+      draggable: false,
+      zoomControl:false,
+      streetViewControl:false,
+      scrollwheel:false
+    });
+    
+    var marker = new google.maps.Marker({
+      position: markerPos,
+      setMap: uvMap,
+
+    });
+  }
+
   //function för att sätta longitude och latitude
   function retLatLng (latitude, longitude) {
   	latitude = latitude;
@@ -27,6 +48,7 @@ var longitude;
 
 $(document).ready(function(){
 	$("#weatherSearch").hide();
+	$("#uvSearch").hide();
 	$(".backToMenuBtn").hide();
 	$(".card").fadeIn("slow");
 	
@@ -38,7 +60,9 @@ $(document).ready(function(){
 		$("#forecastCard").fadeIn("slow");
 		$("#ozoneCard").fadeIn("slow");		
 	});	
-	
+	/**********************************
+	Vädret just nu
+	**********************************/	
 	$("#weatherBtn").click(function(){
 		$("#weatherSearch").toggle("slow");
 		$("#weatherCard").hide();
@@ -46,9 +70,29 @@ $(document).ready(function(){
 		$("#forecastCard").hide();
 		$("#ozoneCard").hide();
 	});
-	/*
+	/**********************************
+	/Vädret just nu
+	**********************************/
+
+	/**********************************
+	UV-index
+	**********************************/	
+	$("#uvBtn").click(function(){
+		$("#uvSearch").toggle("slow");
+		$("#weatherCard").hide();
+		$("#uvCard").hide();
+		$("#forecastCard").hide();
+		$("#ozoneCard").hide();
+	});
+	/**********************************
+	/UV-index
+	**********************************/
+
+
+
+	/**********************************
 	Knappen trycks och JSON hämtas
-	*/
+	**********************************/
 	$("#btn").click(function(){
 		$(".backToMenuBtn").show();
 		// Uppbyggnad av "Current Weather" api
@@ -69,8 +113,6 @@ $(document).ready(function(){
 			var id = data.weather[0].id;
 			var condition;
 			//hämtar JSON data för aktuellt väder 
-
-			var uvIndex;
 
 			if(id>=200 && id<300){
 				condition = "åskstorm"; 
@@ -105,23 +147,21 @@ $(document).ready(function(){
 	/**********************************
 	UV knapp sökningen
 	**********************************/
-	$("#uvBtn").click(function(){
-		$("#weatherSearch").fadeOut("slow");
+	$("#uvSearchBtn").click(function(){
 		// Uppbyggnad av "Current UV" api
 		
 		var geocodeApi = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 		var search = $("#uvSearchBox").val();
 		var geocodeApiKey = "&key=AIzaSyAuFutnl3HZQLaCVm4KwxBMd8xfPIfVwHg";
 		var geocodeUrl = geocodeApi+search+geocodeApiKey;
-
+		var uvIndex;
 
 		$.getJSON(geocodeUrl , function(data){
 			latitude = data.results[0].geometry.location.lat;
 			longitude = data.results[0].geometry.location.lng;
-
+			
 			var uvApi = "http://api.openweathermap.org/v3/uvi/"
 			var latLng = latitude.toFixed()+","+longitude.toFixed();
-
 			var timeStamp = "/current.json";
 			var uvApiKey = "?appid=ac2a79b6cd5460524fd1766d1c265114"
 			var uvUrl = uvApi + latLng + timeStamp + uvApiKey;			
@@ -135,7 +175,8 @@ $(document).ready(function(){
 				if(uv >= 0.0 && uv <= 2.9){
 					uvIndex = "Green";
 				}
-				$("ul").append("<li>"+ uv + " lames" + uvIndex +"</li>");			
+				$("#headerUv").html("I "+search+" är vädret just nu"+":");
+				initUvMap(latitude,longitude);		
 			});
 		});
 	/**********************************
