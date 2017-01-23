@@ -5,7 +5,7 @@ var longitude;
 
     var markerPos = {lat: latitude, lng: longitude};
     var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 4,
+      zoom: 8,
       center: markerPos,
       draggable: false,
       zoomControl:false,
@@ -49,26 +49,32 @@ var longitude;
 $(document).ready(function(){
 	$("#weatherSearch").hide();
 	$("#uvSearch").hide();
+	$("#forecastSearch").hide();
 	$(".backToMenuBtn").hide();
 	$(".card").fadeIn("slow");
 	
 	//backToMenuBtn 
 	$(".backToMenuBtn").click(function(){
 		$("#weatherSearch").fadeOut("fast");
+		$("#uvSearch").fadeOut("fast");
+		$("#forecastSearch").fadeOut("fast");
 		$("#weatherCard").fadeIn("slow");
 		$("#uvCard").fadeIn("slow");
 		$("#forecastCard").fadeIn("slow");
-		$("#ozoneCard").fadeIn("slow");		
+		$("#ozoneCard").fadeIn("slow");	
+		$("ul").hide();	
 	});	
 	/**********************************
 	Vädret just nu
 	**********************************/	
 	$("#weatherBtn").click(function(){
 		$("#weatherSearch").toggle("slow");
+		$("#map").hide();
 		$("#weatherCard").hide();
 		$("#uvCard").hide();
 		$("#forecastCard").hide();
 		$("#ozoneCard").hide();
+		
 	});
 	/**********************************
 	/Vädret just nu
@@ -83,11 +89,28 @@ $(document).ready(function(){
 		$("#uvCard").hide();
 		$("#forecastCard").hide();
 		$("#ozoneCard").hide();
+		$(".backToMenuBtn").show();
+
 	});
 	/**********************************
 	/UV-index
 	**********************************/
 
+	/**********************************
+	Forecast-index
+	**********************************/	
+	$("#forecastBtn").click(function(){
+		$("#forecastSearch").toggle("slow");
+		$("#weatherCard").hide();
+		$("#uvCard").hide();
+		$("#forecastCard").hide();
+		$("#ozoneCard").hide();
+		$(".backToMenuBtn").show();
+
+	});
+	/**********************************
+	/Forecast-index
+	**********************************/
 
 
 	/**********************************
@@ -95,6 +118,8 @@ $(document).ready(function(){
 	**********************************/
 	$("#btn").click(function(){
 		$(".backToMenuBtn").show();
+		$("ul").fadeIn("fast");
+		$("#map").fadeIn("slow");
 		// Uppbyggnad av "Current Weather" api
 		var currentWeatherApi = "http://api.openweathermap.org/data/2.5/weather?q=";
 		var search = $("#searchBox").val();
@@ -149,7 +174,7 @@ $(document).ready(function(){
 	**********************************/
 	$("#uvSearchBtn").click(function(){
 		// Uppbyggnad av "Current UV" api
-		
+		$("ul").fadeIn("fast");
 		var geocodeApi = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 		var search = $("#uvSearchBox").val();
 		var geocodeApiKey = "&key=AIzaSyAuFutnl3HZQLaCVm4KwxBMd8xfPIfVwHg";
@@ -160,10 +185,10 @@ $(document).ready(function(){
 			latitude = data.results[0].geometry.location.lat;
 			longitude = data.results[0].geometry.location.lng;
 			
-			var uvApi = "http://api.openweathermap.org/v3/uvi/"
+			var uvApi = "http://api.openweathermap.org/v3/uvi/";
 			var latLng = latitude.toFixed()+","+longitude.toFixed();
 			var timeStamp = "/current.json";
-			var uvApiKey = "?appid=ac2a79b6cd5460524fd1766d1c265114"
+			var uvApiKey = "?appid=ac2a79b6cd5460524fd1766d1c265114";
 			var uvUrl = uvApi + latLng + timeStamp + uvApiKey;			
 
 			$.getJSON(uvUrl , function(data){
@@ -175,16 +200,90 @@ $(document).ready(function(){
 				if(uv >= 0.0 && uv <= 2.9){
 					uvIndex = "Green";
 				}
-				$("#headerUv").html("I "+search+" är vädret just nu"+":");
+				$("#headerUv").html("I "+search+" är UV-indexet just nu"+":");
+				$("ul").html("<li>"+uv+"</li>");
+				initUvMap(latitude,longitude);		
+			});
+		});
+	});
+	/**********************************
+	/UV knapp sökningen
+	**********************************/
+
+	/**********************************
+	forecast knapp sökningen
+	**********************************/
+	$("#forecastSearchBtn").click(function(){
+
+//http://api.openweathermap.org/data/2.5/forecast?q=Paris&mode=json?appid=ac2a79b6cd5460524fd1766d1c265114&units=metric
+		/*$("ul").fadeIn("fast");
+		var geocodeApi = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+		var search = $("#uvSearchBox").val();
+		var geocodeApiKey = "&key=AIzaSyAuFutnl3HZQLaCVm4KwxBMd8xfPIfVwHg";
+		var geocodeUrl = geocodeApi+search+geocodeApiKey;
+		var uvIndex;*/
+		var forecastApi = "http://api.openweathermap.org/data/2.5/forecast?q=";
+		var search = $("#forecastSearchBox").val();
+		var modeJson = "&mode=json";
+		var forecastApiKey = "&appid=ac2a79b6cd5460524fd1766d1c265114";
+		var unit = "&units=metric";
+		var forecastUrl = forecastApi + search + modeJson + forecastApiKey +unit;			
+		console.log(forecastUrl);
+
+		$.getJSON(forecastUrl , function(data){
+			//latitude = data.results[0].geometry.location.lat;
+			//longitude = data.results[0].geometry.location.lng;
+			
+			var hour1 = data.list[0].main.temp;
+			var timeStamp1 = data.list[0].dt_txt;
+			console.log(timeStamp1);
+			var hour2 = data.list[1].main.temp;
+			var timeStamp2 = data.list[1].dt_txt;
+			var hour3 = data.list[2].main.temp;
+			var timeStamp3 = data.list[2].dt_txt;
+			var hour4 = data.list[3].main.temp;
+			var timeStamp4 = data.list[3].dt_txt;
+			var hour5 = data.list[4].main.temp;
+			var timeStamp5 = data.list[4].dt_txt;
+			console.log(hour1);
+			console.log(timeStamp2);
+			console.log(hour2);
+			console.log(timeStamp3);
+			console.log(hour3);
+			console.log(timeStamp4);
+			console.log(hour4);
+			console.log(timeStamp5);
+			console.log(hour5);
+
+			$("ul").html("<li>"+timeStamp1+" "+hour1+"</li></br>");
+
+			$("#headerForecast").html(search);
+
+			$("ul").append("<li>"+timeStamp2+" "+hour2+"</li>");
+			$("ul").append("<li>"+timeStamp3+" "+hour3+"</li>");
+			$("ul").append("<li>"+timeStamp4+" "+hour4+"</li>");
+			$("ul").append("<li>"+timeStamp5+" "+hour5+"</li>");
+
+			$.getJSON(uvUrl , function(data){
+				console.log(uvUrl);
+
+				var uv = data.data;
+				console.log(uv);
+
+				if(uv >= 0.0 && uv <= 2.9){
+					uvIndex = "Green";
+				}
+				$("#headerUv").html("I "+search+" är UV-indexet just nu"+":");
+				$("ul").html("<li>"+uv+"</li>");
 				initUvMap(latitude,longitude);		
 			});
 		});
 	/**********************************
-	/UV knapp sökningen
+	/forecast knapp sökningen
 	**********************************/
 
 	});
 });
 
 
-//http://api.openweathermap.org/data/2.5/weather?q=London&APPID=ac2a79b6cd5460524fd1766d1c265114&units=metric
+
