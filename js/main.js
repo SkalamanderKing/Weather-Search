@@ -50,6 +50,7 @@ $(document).ready(function(){
 	$("#weatherSearch").hide();
 	$("#uvSearch").hide();
 	$("#forecastSearch").hide();
+	$("#ozoneSearch").hide();
 	$(".backToMenuBtn").hide();
 	$(".card").fadeIn("slow");
 	
@@ -58,6 +59,7 @@ $(document).ready(function(){
 		$("#weatherSearch").fadeOut("fast");
 		$("#uvSearch").fadeOut("fast");
 		$("#forecastSearch").fadeOut("fast");
+		$("#ozoneSearch").fadeOut("fast");
 		$("#weatherCard").fadeIn("slow");
 		$("#uvCard").fadeIn("slow");
 		$("#forecastCard").fadeIn("slow");
@@ -110,6 +112,22 @@ $(document).ready(function(){
 	});
 	/**********************************
 	/Forecast-index
+	**********************************/
+
+	/**********************************
+	Ozone
+	**********************************/	
+	$("#ozoneBtn").click(function(){
+		$("#ozoneSearch").toggle("slow");
+		$("#weatherCard").hide();
+		$("#uvCard").hide();
+		$("#forecastCard").hide();
+		$("#ozoneCard").hide();
+		$(".backToMenuBtn").show();
+
+	});
+	/**********************************
+	/Ozone
 	**********************************/
 
 
@@ -281,6 +299,16 @@ $(document).ready(function(){
 	/**********************************
 	/forecast knapp sökningen
 	**********************************/
+
+	/**********************************
+	Ozone
+	**********************************/	
+		$("#ozoneSearchBtn").click(function(){
+			
+		});
+	/**********************************
+	/Ozone
+	**********************************/	
 
 	});
 });

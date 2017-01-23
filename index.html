@@ -74,7 +74,7 @@
 				</div>
 			</div>
 			<!--/5 dagars-->
-			<!--Air Pollution-->
+			<!--Ozone-->
 			<div id="ozoneCard" class="col-lg-3">
 				<div class="card">
 				  <h3 class="card-header">Ozone</h3>
@@ -85,7 +85,7 @@
 				  </div>
 				</div>
 			</div>
-			<!--/Air Pollution-->
+			<!--/Ozone-->
 		</div>
 	</div>
 	<!--/Alternativ-->	
@@ -168,6 +168,33 @@
 		</div>		
 	</div>
 	<!--/Forecast search tab-->	
+
+	<!--Ozone search tab-->	
+	<div id="ozoneSearch" class="container">
+
+		<div class="row">
+  		<div class="col-md-6 offset-md-3">
+  			<h2>Sök UV-index var som helst i världen!</h2>
+  			<p>Fyll i vilken stad i världen du vill veta om det behövs solskyddsfaktor eller ej!</p>
+				<div class="input-group my-3">
+		      <input id="ozoneSearchBox" class="form-control" value="London">
+		      <span class="input-group-btn">
+		        <button id="ozoneSearchBtn" class="btn btn-secondary" type="button">Sök 5-dagars prognos!</button>
+		      </span>  			
+  			</div>	    				
+
+		    <div class="mb-3" id="uvMap"></div>
+		    <h3 id="headerOzone"></h3>
+				<ul></ul>		
+				<div class="backToMenuBtn my-5"><button type="button" class="btn btn-danger btn-lg btn-block">Tillbaka till huvudmenyn</button></div>
+			</div>
+
+
+			
+		</div>		
+	</div>
+	<!--/Ozone search tab-->	
+
 
 
 
