@@ -198,6 +198,7 @@ $(document).ready(function(){
 		var geocodeApiKey = "&key=AIzaSyAuFutnl3HZQLaCVm4KwxBMd8xfPIfVwHg";
 		var geocodeUrl = geocodeApi+search+geocodeApiKey;
 		var uvIndex;
+		var colorCode;
 
 		$.getJSON(geocodeUrl , function(data){
 			latitude = data.results[0].geometry.location.lat;
@@ -210,17 +211,34 @@ $(document).ready(function(){
 			var uvUrl = uvApi + latLng + timeStamp + uvApiKey;			
 
 			$.getJSON(uvUrl , function(data){
-				console.log(uvUrl);
 
 				var uv = data.data;
-				console.log(uv);
-
 				if(uv >= 0.0 && uv <= 2.9){
-					uvIndex = "Green";
+					uvIndex = "Grön";
+					colorCode = "låg";
 				}
-				$("#headerUv").html("I "+search+" är UV-indexet just nu"+":");
+				else if (uv>=3.0 && uv<=5.9){
+					uvIndex = "Yellow";
+					colorCode = "måttlig";					
+				}
+				else if (uv>=6.0 && uv<=7.9){
+					uvIndex = "Orange";
+					colorCode = "hög";					
+				}
+				else if (uv>=8.0 && uv<=10.9){
+					uvIndex = "Röd";
+					colorCode = "väldigt hög";					
+				}
+				else {
+					uvIndex = "Violet";
+					colorCode = "extrem";
+				}
+
+				$("#headerUv").html("I "+search+" är UV-indexet just nu :");
 				$("ul").html("<li>"+uv+"</li>");
-				initUvMap(latitude,longitude);		
+
+				$("#uvAnswer").html("UV-index " +"<strong>"+uvIndex+"</strong>"+ " innebär att risken för skada vid exponering mot solen utan solkräm för den genomsnittlige människan är " + "<strong>"+colorCode+"</strong>");
+
 			});
 		});
 	});
@@ -232,14 +250,6 @@ $(document).ready(function(){
 	forecast knapp sökningen
 	**********************************/
 	$("#forecastSearchBtn").click(function(){
-
-//http://api.openweathermap.org/data/2.5/forecast?q=Paris&mode=json?appid=ac2a79b6cd5460524fd1766d1c265114&units=metric
-		/*$("ul").fadeIn("fast");
-		var geocodeApi = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-		var search = $("#uvSearchBox").val();
-		var geocodeApiKey = "&key=AIzaSyAuFutnl3HZQLaCVm4KwxBMd8xfPIfVwHg";
-		var geocodeUrl = geocodeApi+search+geocodeApiKey;
-		var uvIndex;*/
 		var forecastApi = "http://api.openweathermap.org/data/2.5/forecast?q=";
 		var search = $("#forecastSearchBox").val();
 		var modeJson = "&mode=json";
@@ -299,19 +309,42 @@ $(document).ready(function(){
 	/**********************************
 	/forecast knapp sökningen
 	**********************************/
+	});
 
 	/**********************************
 	Ozone
 	**********************************/	
 		$("#ozoneSearchBtn").click(function(){
-			
+			var geocodeApi = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+			var search = $("#ozoneSearchBox").val();
+			var geocodeApiKey = "&key=AIzaSyAuFutnl3HZQLaCVm4KwxBMd8xfPIfVwHg";
+			var geocodeUrl = geocodeApi+search+geocodeApiKey;
+			$.getJSON(geocodeUrl , function(data){
+				latitude = data.results[0].geometry.location.lat;
+				longitude = data.results[0].geometry.location.lng;
+				var ozoneApi = "http://api.openweathermap.org/pollution/v1/o3/";
+				var latLng = latitude.toFixed() + "," + longitude.toFixed();
+				var timeStamp = "/current.json";
+				var ozoneApiKey = "?appid=ac2a79b6cd5460524fd1766d1c265114";
+				var ozoneUrl = ozoneApi + latLng + timeStamp + ozoneApiKey;
+
+				$.getJSON(ozoneUrl, function(data){
+					var ozoneIndex = data.data;
+					var ozoneMetric = ozoneIndex/100;
+					$("#headerOzone").html("Ozonlagret över "+search+" är :");
+					$("ul").html("<li>"+ozoneMetric+" milimeter tjockt</li>");						
+				});
+			});
 		});
+
+
+
 	/**********************************
 	/Ozone
 	**********************************/	
+	//http://api.openweathermap.org/pollution/v1/o3/0.0,10.0/current.json?appid=ac2a79b6cd5460524fd1766d1c265114
 
-	});
-});
+}); /*document ready*/
 
 
 
