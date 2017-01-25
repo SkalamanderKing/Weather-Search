@@ -16,12 +16,31 @@
 </head>
 <body>
 	<!-- Navbar -->
-	<nav class="navbar navbar-light bg-faded">
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
 		<div class="container">
-		  <a class="navbar-brand" href="#">
-		    <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
-		    Bootstrap
-		  </a>
+		  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		    <span class="navbar-toggler-icon"></span>
+		  </button>
+		  <a class="navbar-brand h1" href="#">Weather-Search</a>
+		  <div class="collapse navbar-collapse" id="navbarNav">
+		    <ul class="navbar-nav">
+		      <li class="nav-item active">
+						<button id="navHome" class="btn btn-link">Home</button>
+		      </li>
+		      <li class="nav-item">
+						<button id="navWeather" class="btn btn-link">Vädret</button>
+		      </li>
+		      <li class="nav-item">
+		        <button id="navUv" class="btn btn-link">UV-Index</button>
+		      </li>
+		      <li class="nav-item">
+		        <button id="navForecast" class="btn btn-link">Prognos</button>
+		      </li>
+		      <li class="nav-item">
+		        <button id="navOzone" class="btn btn-link">Ozone</button>
+		      </li>
+		    </ul>
+		  </div>
 		</div>
 	</nav>
 		
@@ -29,11 +48,15 @@
 	<!--Jumbotron-->
 	<div class="jumbotron jumbotron-fluid">
 	  <div class="container">
-	    <h1 class="display-3">Weather Search</h1>
+	    <h1 class="display-3">Weather-Search</h1>
 	    <p class="lead">Tjänsten som låter dig söka vädret just nu, väderprognoser, UV-index samt ozone-index på en och samma plats! Enjoy!</p>
 	  </div>
 	</div>
 	<!--/Jumbotron-->
+
+	<div id="loading">
+		<img style="display:none" src="default.gif">
+	</div>
 
 	<!--Alternativ-->
 	<div class="container">
@@ -43,8 +66,9 @@
 				<div class="card">
 				  <h3 class="card-header">Vädret just nu</h3>
 				  <div class="card-block">
-				    <h4 class="card-title">Special title treatment</h4>
-				    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+				    <h4 class="card-title">Sök på stad vilken stad i världen!</h4>
+				    <p class="card-text">Få reda på vad för väder dem har på andra sidan jordklotet!</p>
+				  </br>
 				    <a href="#" id="weatherBtn" class="btn btn-primary">Sök väder!</a>
 				  </div>
 				</div>				
@@ -53,10 +77,10 @@
 			<!--UV-->
 			<div id="uvCard" class="col-lg-3">
 				<div class="card">
-				  <h3 class="card-header">UV Index</h3>
+				  <h3 class="card-header">UV-Index</h3>
 				  <div class="card-block">
-				    <h4 class="card-title">Special title treatment</h4>
-				    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+				    <h4 class="card-title">Nyfiken på UV-index någonstans?</h4>
+				    <p class="card-text">Med denna funktion kan du få reda på om man behöver solskyddsfaktor eller ej!</p>
 				    <a href="#" id="uvBtn" class="btn btn-primary">Sök UV Index!</a>
 				  </div>
 				</div>
@@ -107,7 +131,7 @@
 
 		    <div class="mb-3" id="map"></div>
 		    <h3 id="headerCity"></h3>
-				<ul></ul>		
+				<ul class="results"></ul>		
 				<div class="backToMenuBtn my-5"><button type="button" class="btn btn-danger btn-lg btn-block">Tillbaka till huvudmenyn</button></div>
 			</div>
 
@@ -154,7 +178,7 @@
 				<div class="input-group my-3">
 		      <input id="forecastSearchBox" class="form-control" value="London">
 		      <span class="input-group-btn">
-		        <button id="forecastSearchBtn" class="btn btn-secondary" type="button">Sök 5-dagars prognos!</button>
+		        <button id="forecastSearchBtn" class="btn btn-secondary" type="button">Sök 12-timmars prognos!</button>
 		      </span>  			
   			</div>	    				
 

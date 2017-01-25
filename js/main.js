@@ -64,7 +64,7 @@ $(document).ready(function(){
 		$("#uvCard").fadeIn("slow");
 		$("#forecastCard").fadeIn("slow");
 		$("#ozoneCard").fadeIn("slow");	
-		$("ul").hide();	
+		$(".results").hide();	
 	});	
 	/**********************************
 	Vädret just nu
@@ -130,7 +130,32 @@ $(document).ready(function(){
 	/Ozone
 	**********************************/
 
-
+	/**********************************
+	Navbar Home
+	**********************************/
+	$("#navHome").click(function(){
+		$("#weatherSearch").fadeOut("fast");
+		$("#uvSearch").fadeOut("fast");
+		$("#forecastSearch").fadeOut("fast");
+		$("#ozoneSearch").fadeOut("fast");
+		$("#weatherCard").fadeIn("slow");
+		$("#uvCard").fadeIn("slow");
+		$("#forecastCard").fadeIn("slow");
+		$("#ozoneCard").fadeIn("slow");	
+		$(".results").hide();	
+	});
+	/**********************************
+	/Navbar Vädret
+	**********************************/
+	$("#navWeather").click(function(){
+		$("#weatherSearch").toggle("slow");
+		$("#map").hide();
+		$("#weatherCard").hide();
+		$("#uvCard").hide();
+		$("#forecastCard").hide();
+		$("#ozoneCard").hide();
+		
+	});	
 	/**********************************
 	Knappen trycks och JSON hämtas
 	**********************************/
@@ -177,7 +202,7 @@ $(document).ready(function(){
 				condition ="Fog";
 			}
 
-			$("ul").html("<li>"+temp+"°C"+" och "+condition+"</li>");
+			$(".results").html("<li>"+temp+"°C"+" och "+condition+"</li>");
 			$("#headerCity").html("I "+search+" är vädret just nu"+":");
       initMap(latitude,longitude);
 		});
@@ -264,7 +289,7 @@ $(document).ready(function(){
 			
 			var hour1 = data.list[0].main.temp;
 			var timeStamp1 = data.list[0].dt_txt;
-			console.log(timeStamp1);
+
 			var hour2 = data.list[1].main.temp;
 			var timeStamp2 = data.list[1].dt_txt;
 			var hour3 = data.list[2].main.temp;
@@ -273,15 +298,6 @@ $(document).ready(function(){
 			var timeStamp4 = data.list[3].dt_txt;
 			var hour5 = data.list[4].main.temp;
 			var timeStamp5 = data.list[4].dt_txt;
-			console.log(hour1);
-			console.log(timeStamp2);
-			console.log(hour2);
-			console.log(timeStamp3);
-			console.log(hour3);
-			console.log(timeStamp4);
-			console.log(hour4);
-			console.log(timeStamp5);
-			console.log(hour5);
 
 			$("ul").html("<li>"+timeStamp1+" "+hour1+"</li></br>");
 
@@ -292,7 +308,7 @@ $(document).ready(function(){
 			$("ul").append("<li>"+timeStamp4+" "+hour4+"</li>");
 			$("ul").append("<li>"+timeStamp5+" "+hour5+"</li>");
 
-			$.getJSON(uvUrl , function(data){
+			/*$.getJSON(uvUrl , function(data){
 				console.log(uvUrl);
 
 				var uv = data.data;
@@ -303,8 +319,8 @@ $(document).ready(function(){
 				}
 				$("#headerUv").html("I "+search+" är UV-indexet just nu"+":");
 				$("ul").html("<li>"+uv+"</li>");
-				initUvMap(latitude,longitude);		
-			});
+				initUvMap(latitude,longitude);	
+			});*/
 		});
 	/**********************************
 	/forecast knapp sökningen
@@ -320,6 +336,7 @@ $(document).ready(function(){
 			var geocodeApiKey = "&key=AIzaSyAuFutnl3HZQLaCVm4KwxBMd8xfPIfVwHg";
 			var geocodeUrl = geocodeApi+search+geocodeApiKey;
 			$.getJSON(geocodeUrl , function(data){
+
 				latitude = data.results[0].geometry.location.lat;
 				longitude = data.results[0].geometry.location.lng;
 				var ozoneApi = "http://api.openweathermap.org/pollution/v1/o3/";

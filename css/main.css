@@ -15,3 +15,7 @@ ul {
 #headerForecast {
 	text-transform: capitalize;
 }
+
+#navHome, #navWeather, #navUv, #navForecast, #navOzone{
+	color: gray; 
+}
