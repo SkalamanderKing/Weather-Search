@@ -18,5 +18,4 @@ Hope you guys enjoy!
 
 Link to my LinkedIn profile: <a href="https://www.linkedin.com/in/gustav-palm-53393a114?trk=nav_responsive_tab_profile 
 ">Gustav Palm</a></br>
-Link to the project live: <a href="https://www.linkedin.com/in/gustav-palm-53393a114?trk=nav_responsive_tab_profile 
-">Gustav Palm</a>
+Link to the project live on <a href="https://gustav.palm/">this</a> link
