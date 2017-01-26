@@ -1,6 +1,8 @@
 var latitude;
 var longitude;
-	//initiering av google maps
+	/**********************************
+	Initiering Google Maps
+	**********************************/
   function initMap(latitude, longitude) {
 
     var markerPos = {lat: latitude, lng: longitude};
@@ -19,25 +21,9 @@ var longitude;
 
     });
   }
-
-  function initUvMap(latitude, longitude) {
-
-    var markerPos = {lat: latitude, lng: longitude};
-    var map = new google.maps.Map(document.getElementById('uvMap'), {
-      zoom: 4,
-      center: markerPos,
-      draggable: false,
-      zoomControl:false,
-      streetViewControl:false,
-      scrollwheel:false
-    });
-    
-    var marker = new google.maps.Marker({
-      position: markerPos,
-      setMap: uvMap,
-
-    });
-  }
+	/**********************************
+	/Initiering Google Maps
+	**********************************/
 
   //function för att sätta longitude och latitude
   function retLatLng (latitude, longitude) {
@@ -54,7 +40,9 @@ $(document).ready(function(){
 	$(".backToMenuBtn").hide();
 	$(".card").fadeIn("slow");
 	
-	//backToMenuBtn 
+	/**********************************
+	Tillbaka till meny
+	**********************************/	
 	$(".backToMenuBtn").click(function(){
 		$("#weatherSearch").fadeOut("fast");
 		$("#uvSearch").fadeOut("fast");
@@ -67,6 +55,10 @@ $(document).ready(function(){
 		$(".results").hide();	
 	});	
 	/**********************************
+	/Tillbaka till meny
+	**********************************/	
+
+	/**********************************
 	Vädret just nu
 	**********************************/	
 	$("#weatherBtn").click(function(){
@@ -76,7 +68,6 @@ $(document).ready(function(){
 		$("#uvCard").hide();
 		$("#forecastCard").hide();
 		$("#ozoneCard").hide();
-		
 	});
 	/**********************************
 	/Vädret just nu
@@ -99,7 +90,7 @@ $(document).ready(function(){
 	**********************************/
 
 	/**********************************
-	Forecast-index
+	12h Forecast
 	**********************************/	
 	$("#forecastBtn").click(function(){
 		$("#forecastSearch").toggle("slow");
@@ -111,7 +102,7 @@ $(document).ready(function(){
 
 	});
 	/**********************************
-	/Forecast-index
+	/12h Forecast
 	**********************************/
 
 	/**********************************
@@ -145,19 +136,41 @@ $(document).ready(function(){
 		$(".results").hide();	
 	});
 	/**********************************
-	/Navbar Vädret
+	/Navbar Home
+	**********************************/
+
+	/**********************************
+	Navbar 12h forecast
 	**********************************/
 	$("#navWeather").click(function(){
-		$("#weatherSearch").toggle("slow");
-		$("#map").hide();
+		$("#uvSearch").toggle("slow");
 		$("#weatherCard").hide();
 		$("#uvCard").hide();
 		$("#forecastCard").hide();
 		$("#ozoneCard").hide();
-		
-	});	
+		$(".backToMenuBtn").show();
+	});
 	/**********************************
-	Knappen trycks och JSON hämtas
+	/Navbar 12h forecast
+	**********************************/	
+
+	/**********************************
+	Navbar uv
+	**********************************/
+	$("#navUv").click(function(){
+		$("#uvSearch").toggle("slow");
+		$("#map").hide();
+		$("#weatherCard").hide();
+		$("#uvCard").hide();
+		$("#forecastCard").hide();
+		$("#ozoneCard").hide();		
+	});
+	/**********************************
+	/Navbar üv
+	**********************************/	
+
+	/**********************************
+	AJAX anropp för vädret just nu
 	**********************************/
 	$("#btn").click(function(){
 		$(".backToMenuBtn").show();
@@ -208,15 +221,15 @@ $(document).ready(function(){
 		});
 
 	});
-	/*
-	Knappen trycks och JSON hämtas
-	*/
+	/**********************************
+	/AJAX anropp för vädret just nu
+	**********************************/
 
 	/**********************************
-	UV knapp sökningen
+	AJAX anropp för UV-index
 	**********************************/
 	$("#uvSearchBtn").click(function(){
-		// Uppbyggnad av "Current UV" api
+
 		$("ul").fadeIn("fast");
 		var geocodeApi = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 		var search = $("#uvSearchBox").val();
@@ -255,24 +268,24 @@ $(document).ready(function(){
 					colorCode = "väldigt hög";					
 				}
 				else {
-					uvIndex = "Violet";
+					uvIndex = "Lila";
 					colorCode = "extrem";
 				}
 
 				$("#headerUv").html("I "+search+" är UV-indexet just nu :");
-				$("ul").html("<li>"+uv+"</li>");
+				$(".results.results").html("<li>"+uv+"</li>");
 
-				$("#uvAnswer").html("UV-index " +"<strong>"+uvIndex+"</strong>"+ " innebär att risken för skada vid exponering mot solen utan solkräm för den genomsnittlige människan är " + "<strong>"+colorCode+"</strong>");
+				$("#uvAnswer").html("UV-index "+"<strong>"+uv+"</strong>"+ " innebär färgkod "+"<strong>"+uvIndex+"</strong>"+ " som i sin tur innebär att risken för skada vid exponering mot solen utan solkräm för den genomsnittlige människan är " + "<strong>"+colorCode+"</strong>");
 
 			});
 		});
 	});
 	/**********************************
-	/UV knapp sökningen
+	/AJAX anropp för UV-index
 	**********************************/
 
 	/**********************************
-	forecast knapp sökningen
+	AJAX anropp för 12h prognos
 	**********************************/
 	$("#forecastSearchBtn").click(function(){
 		var forecastApi = "http://api.openweathermap.org/data/2.5/forecast?q=";
@@ -281,15 +294,11 @@ $(document).ready(function(){
 		var forecastApiKey = "&appid=ac2a79b6cd5460524fd1766d1c265114";
 		var unit = "&units=metric";
 		var forecastUrl = forecastApi + search + modeJson + forecastApiKey +unit;			
-		console.log(forecastUrl);
 
 		$.getJSON(forecastUrl , function(data){
-			//latitude = data.results[0].geometry.location.lat;
-			//longitude = data.results[0].geometry.location.lng;
-			
+
 			var hour1 = data.list[0].main.temp;
 			var timeStamp1 = data.list[0].dt_txt;
-
 			var hour2 = data.list[1].main.temp;
 			var timeStamp2 = data.list[1].dt_txt;
 			var hour3 = data.list[2].main.temp;
@@ -299,36 +308,20 @@ $(document).ready(function(){
 			var hour5 = data.list[4].main.temp;
 			var timeStamp5 = data.list[4].dt_txt;
 
-			$("ul").html("<li>"+timeStamp1+" "+hour1+"</li></br>");
-
-			$("#headerForecast").html(search);
-
-			$("ul").append("<li>"+timeStamp2+" "+hour2+"</li>");
-			$("ul").append("<li>"+timeStamp3+" "+hour3+"</li>");
-			$("ul").append("<li>"+timeStamp4+" "+hour4+"</li>");
-			$("ul").append("<li>"+timeStamp5+" "+hour5+"</li>");
-
-			/*$.getJSON(uvUrl , function(data){
-				console.log(uvUrl);
-
-				var uv = data.data;
-				console.log(uv);
-
-				if(uv >= 0.0 && uv <= 2.9){
-					uvIndex = "Green";
-				}
-				$("#headerUv").html("I "+search+" är UV-indexet just nu"+":");
-				$("ul").html("<li>"+uv+"</li>");
-				initUvMap(latitude,longitude);	
-			});*/
+			$(".results").html("<li><strong>Datum/tid</strong>: "+timeStamp1+" <strong>Temperatur: </strong>"+hour1+"</li></br>");
+			$("#headerForecast").html("De närmsta 12h i "+search+":");
+			$(".results").append("<li><strong>Datum/tid</strong>: " +timeStamp2+ " <strong>Temperatur: </strong>"+hour2+"°C</li></br>");
+			$(".results").append("<li><strong>Datum/tid</strong>: " +timeStamp3+ " <strong>Temperatur: </strong>"+hour3+"°C</li></br>");
+			$(".results").append("<li><strong>Datum/tid</strong>: " +timeStamp4+ " <strong>Temperatur: </strong>"+hour4+"°C</li></br>");
+			$(".results").append("<li><strong>Datum/tid</strong>: " +timeStamp5+ " <strong>Temperatur: </strong>"+hour5+"°C</li></br>");
 		});
-	/**********************************
-	/forecast knapp sökningen
-	**********************************/
 	});
+	/**********************************
+	/AJAX anropp för 12h prognos
+	**********************************/
 
 	/**********************************
-	Ozone
+	AJAX anropp för ozone
 	**********************************/	
 		$("#ozoneSearchBtn").click(function(){
 			var geocodeApi = "https://maps.googleapis.com/maps/api/geocode/json?address=";
@@ -349,17 +342,13 @@ $(document).ready(function(){
 					var ozoneIndex = data.data;
 					var ozoneMetric = ozoneIndex/100;
 					$("#headerOzone").html("Ozonlagret över "+search+" är :");
-					$("ul").html("<li>"+ozoneMetric+" milimeter tjockt</li>");						
+					$(".results").html("<li>"+ozoneMetric+" milimeter tjockt</li>");						
 				});
 			});
 		});
-
-
-
 	/**********************************
-	/Ozone
+	/AJAX anropp för ozone
 	**********************************/	
-	//http://api.openweathermap.org/pollution/v1/o3/0.0,10.0/current.json?appid=ac2a79b6cd5460524fd1766d1c265114
 
 }); /*document ready*/
 

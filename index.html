@@ -1,13 +1,10 @@
 <html>
 <head>
-	<title>AJAX</title>
+	<title>WeatherSearch</title>
 	
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-
-
-
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
 	<script type="text/javascript" src="js/main.js"></script>
@@ -21,7 +18,7 @@
 		  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 		    <span class="navbar-toggler-icon"></span>
 		  </button>
-		  <a class="navbar-brand h1" href="#">Weather-Search</a>
+		  <a class="navbar-brand h1" href="#">WeatherSearch</a>
 		  <div class="collapse navbar-collapse" id="navbarNav">
 		    <ul class="navbar-nav">
 		      <li class="nav-item active">
@@ -42,14 +39,13 @@
 		    </ul>
 		  </div>
 		</div>
-	</nav>
-		
+	</nav>		
 	<!--/Navbar-->
 	<!--Jumbotron-->
 	<div class="jumbotron jumbotron-fluid">
 	  <div class="container">
-	    <h1 class="display-3">Weather-Search</h1>
-	    <p class="lead">Tjänsten som låter dig söka vädret just nu, väderprognoser, UV-index samt ozone-index på en och samma plats! Enjoy!</p>
+	    <h1 class="display-3">WeatherSearch</h1>
+	    <p class="lead">Tjänsten som låter dig söka vädret just nu, väderprognoser, UV-index samt ozone-index, på en och samma plats. Enjoy!</p>
 	  </div>
 	</div>
 	<!--/Jumbotron-->
@@ -59,10 +55,10 @@
 	</div>
 
 	<!--Alternativ-->
-	<div class="container">
+	<div class="container pb-5">
 		<div class="row">
 			<!--Väder-->
-			<div id="weatherCard" class="col-lg-3">
+			<div id="weatherCard" class="col-lg-3 pb-4">
 				<div class="card">
 				  <h3 class="card-header">Vädret just nu</h3>
 				  <div class="card-block">
@@ -75,7 +71,7 @@
 			</div>
 			<!--/Väder-->
 			<!--UV-->
-			<div id="uvCard" class="col-lg-3">
+			<div id="uvCard" class="col-lg-3 pb-4">
 				<div class="card">
 				  <h3 class="card-header">UV-Index</h3>
 				  <div class="card-block">
@@ -87,25 +83,27 @@
 			</div>
 			<!--/UV-->
 			<!--5 dagars-->
-			<div id="forecastCard" class="col-lg-3">
+			<div id="forecastCard" class="col-lg-3 pb-4">
 				<div class="card">
 				  <h3 class="card-header">Prognos</h3>
 				  <div class="card-block">
-				    <h4 class="card-title">Special title treatment</h4>
-				    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-				    <a href="#" id="forecastBtn" class="btn btn-primary">Sök 5 dagars prognos!</a>
+				    <h4 class="card-title">Sök 12h prognoser</h4>
+				    <p class="card-text">Ta reda på hur vädret ska vara 12 timmar framöver på given plats på jorden!</p>
+				  </br>
+				    <a href="#" id="forecastBtn" class="btn btn-primary">Sök 5h prognos!</a>
 				  </div>
 				</div>
 			</div>
 			<!--/5 dagars-->
 			<!--Ozone-->
-			<div id="ozoneCard" class="col-lg-3">
+			<div id="ozoneCard" class="col-lg-3 pb-4">
 				<div class="card">
 				  <h3 class="card-header">Ozone</h3>
 				  <div class="card-block">
-				    <h4 class="card-title">Special title treatment</h4>
-				    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-				    <a href="#" id="ozoneBtn" class="btn btn-primary">Sök luftkvalité!</a>
+				    <h4 class="card-title">Nyfiken hur tunnt ozonlagret är?</h4>
+				    <p class="card-text">Sök på en plats på jorden och ta reda på det!</p>
+				  </br>
+				    <a href="#" id="ozoneBtn" class="btn btn-primary">Sök!</a>
 				  </div>
 				</div>
 			</div>
@@ -134,9 +132,6 @@
 				<ul class="results"></ul>		
 				<div class="backToMenuBtn my-5"><button type="button" class="btn btn-danger btn-lg btn-block">Tillbaka till huvudmenyn</button></div>
 			</div>
-
-
-			
 		</div>		
 	</div>
 	<!--/weather search tab-->
@@ -157,13 +152,10 @@
 
 		    <div class="mb-3" id="uvMap"></div>
 		    <h3 id="headerUv"></h3>
-				<ul></ul>
+				<ul class="results"></ul>
 				<p id="uvAnswer"></p>		
 				<div class="backToMenuBtn my-5"><button type="button" class="btn btn-danger btn-lg btn-block">Tillbaka till huvudmenyn</button></div>
 			</div>
-
-
-			
 		</div>		
 	</div>
 	<!--/uv search tab-->	
@@ -175,21 +167,19 @@
   		<div class="col-md-6 offset-md-3">
   			<h2>Sök UV-index var som helst i världen!</h2>
   			<p>Fyll i vilken stad i världen du vill veta om det behövs solskyddsfaktor eller ej!</p>
-				<div class="input-group my-3">
+				<div class="input-group my-5">
 		      <input id="forecastSearchBox" class="form-control" value="London">
 		      <span class="input-group-btn">
 		        <button id="forecastSearchBtn" class="btn btn-secondary" type="button">Sök 12-timmars prognos!</button>
 		      </span>  			
   			</div>	    				
 
-		    <div class="mb-3" id="uvMap"></div>
 		    <h3 id="headerForecast"></h3>
-				<ul></ul>		
+				<div class="mt-3">
+					<ul class="results"></ul>		
+				</div>
 				<div class="backToMenuBtn my-5"><button type="button" class="btn btn-danger btn-lg btn-block">Tillbaka till huvudmenyn</button></div>
 			</div>
-
-
-			
 		</div>		
 	</div>
 	<!--/Forecast search tab-->	
@@ -200,34 +190,31 @@
 		<div class="row">
   		<div class="col-md-6 offset-md-3">
   			<h2>Få reda på tjockleken på ozonlagret var som helst i världen!</h2>
-  			<p>Nyfiken hur tjockt ozonlagret är över en given stad i världen? Fyll i vilken stad som helst och få reda på exakt hur tjock ozonlagret är!</p>
-				<div class="input-group my-3">
+  			<p >Nyfiken hur tjockt ozonlagret är över en given stad i världen? Fyll i vilken stad som helst och få reda på exakt hur tjock ozonlagret är!</p>
+				<div class="input-group my-5">
 		      <input id="ozoneSearchBox" class="form-control" value="London">
 		      <span class="input-group-btn">
 		        <button id="ozoneSearchBtn" class="btn btn-secondary" type="button">Sök!</button>
 		      </span>  			
-  			</div>	    				
+  			</div>
 
-		    <div class="mb-3" id="uvMap"></div>
-		    <h3 id="headerOzone"></h3>
-				<ul></ul>		
-				<div class="backToMenuBtn my-5"><button type="button" class="btn btn-danger btn-lg btn-block">Tillbaka till huvudmenyn</button></div>
-			</div>
-
-
-			
+		    <h2 id="headerOzone" class="pb-5"></h2>
+				<ul class="results"></ul>		
+				<div class="backToMenuBtn"><button type="button" class="btn btn-danger btn-lg btn-block">Tillbaka till huvudmenyn</button></div>
+			</div>			
 		</div>		
 	</div>
 	<!--/Ozone search tab-->	
-
-
+	<!--footer-->
+	<div class="footer t-5">
+		<strong>© 2017 Gustav Palm</strong>
+	</div>
+	<!--/footer-->	
 
 
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAuFutnl3HZQLaCVm4KwxBMd8xfPIfVwHg&callback=initMap">
   </script>
 
-
-  
 </body>
 </html>
